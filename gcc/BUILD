@@ -1,0 +1,41 @@
+load("@rules_foreign_cc//foreign_cc:defs.bzl", "configure_make")
+
+BINS = [
+    "addr2line",
+    "ar",
+    "as",
+    "c++filt",
+    "elfedit",
+    "gprof",
+    "ld",
+    "ld.bfd",
+    "nm",
+    "objcopy",
+    "objdump",
+    "ranlib",
+    "readelf",
+    "size",
+    "strings",
+    "strip",
+]
+
+LIBS = [
+    "libbfd.a",
+    "libopcodes.a",
+    "libctf.a",
+    "libctf-nobfd.a",
+]
+
+LIBTOOLS = ["lib/" + lib.replace(".a", ".la") for lib in LIBS]
+
+configure_make(
+    name = "binutils",
+    lib_source = "@binutils//:all",
+    configure_options = [
+        "--target=aarch64-unknown-linux-gnu",
+    ],
+    out_binaries = BINS,
+    out_static_libs = LIBS,
+    out_shared_libs = ["bfd-plugins/libdep.so"],
+    out_data_dirs = LIBTOOLS + ["share", "aarch64-unknown-linux-gnu"],
+)
