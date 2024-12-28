@@ -21,7 +21,7 @@ bazel_features_deps()
 
 http_archive(
     name = "binutils",
-    build_file = "@//gcc:BUILD.binutils",
+    build_file = "@//packages:BUILD.binutils",
     sha256 = "820d9724f020a3e69cb337893a0b63c2db161dadcb0e06fc11dc29eb1e84a32c",
     strip_prefix = "binutils-2.37",
     url = "https://ftp.gnu.org/gnu/binutils/binutils-2.37.tar.xz",
