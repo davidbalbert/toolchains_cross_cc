@@ -1,7 +1,7 @@
 load("@rules_foreign_cc//foreign_cc:defs.bzl", "configure_make")
 
 filegroup(
-    name = "all",
+    name = "srcs",
     srcs = glob(["**"]),
 )
 
@@ -35,7 +35,7 @@ LIBTOOLS = ["lib/" + lib.replace(".a", ".la") for lib in LIBS]
 
 configure_make(
     name = "binutils",
-    lib_source = "@binutils//:all",
+    lib_source = ":srcs",
     configure_options = [
         "--target=aarch64-unknown-linux-gnu",
     ],
