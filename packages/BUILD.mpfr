@@ -9,6 +9,9 @@ configure_make(
     name = "libmpfr",
     lib_source = ":srcs",
     deps = ["@gmp//:libgmp"],
-    out_data_dirs = ["share"],
     visibility = ["//visibility:public"],
+    env = {
+        # Workaround for https://github.com/bazel-contrib/rules_foreign_cc/issues/1160
+        "LD": "",
+    },
 )

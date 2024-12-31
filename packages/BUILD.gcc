@@ -1,0 +1,37 @@
+load("@rules_foreign_cc//foreign_cc:defs.bzl", "configure_make")
+
+filegroup(
+    name = "srcs",
+    srcs = glob(["**"]),
+)
+
+configure_make(
+    name = "gcc",
+    lib_source = ":srcs",
+    configure_options = [
+        "--target=aarch64-unknown-linux-gnu",
+        "--enable-languages=c,c++",
+    ],
+    targets = [
+        "all-gcc",
+        "install-gcc",
+        "all-target-libgcc",
+        "install-target-libgcc",
+    ],
+    out_binaries = [
+        "gcc",
+        "g++",
+        "cpp",
+    ],
+    deps = [
+        "@mpc//:libmpc",
+        "@mpfr//:libmpfr",
+        "@gmp//:libgmp",
+        "@binutils//:binutils",
+    ],
+    visibility = ["//visibility:public"],
+    env = {
+        # Workaround for https://github.com/bazel-contrib/rules_foreign_cc/issues/1160
+        "LD": "",
+    },
+)

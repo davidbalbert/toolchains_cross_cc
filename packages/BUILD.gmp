@@ -8,6 +8,9 @@ filegroup(
 configure_make(
     name = "libgmp",
     lib_source = ":srcs",
-    out_data_dirs = ["share"],
     visibility = ["//visibility:public"],
+    env = {
+        # Workaround for https://github.com/bazel-contrib/rules_foreign_cc/issues/1160
+        "LD": "",
+    },
 )

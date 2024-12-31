@@ -31,7 +31,10 @@ LIBS = [
     "libctf-nobfd.a",
 ]
 
-LIBTOOLS = ["lib/" + lib.replace(".a", ".la") for lib in LIBS]
+SHARED_LIBS = [
+    "bfd-plugins/libdep.so",
+]
+
 
 configure_make(
     name = "binutils",
@@ -41,6 +44,10 @@ configure_make(
     ],
     out_binaries = BINS,
     out_static_libs = LIBS,
-    out_shared_libs = ["bfd-plugins/libdep.so"],
-    out_data_dirs = LIBTOOLS + ["share", "aarch64-unknown-linux-gnu"],
+    out_shared_libs = SHARED_LIBS,
+    visibility = ["//visibility:public"],
+    env = {
+        # Workaround for https://github.com/bazel-contrib/rules_foreign_cc/issues/1160
+        "LD": "",
+    },
 )
