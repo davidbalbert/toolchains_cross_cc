@@ -14,3 +14,10 @@ configure_make(
         "LD": "",
     },
 )
+
+filegroup(
+    name = "install_prefix",
+    srcs = [":libgmp"],
+    output_group = "gen_dir",
+    visibility = ["//visibility:public"],
+)

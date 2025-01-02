@@ -11,6 +11,9 @@ configure_make(
     configure_options = [
         "--target=aarch64-unknown-linux-gnu",
         "--enable-languages=c,c++",
+        "--with-gmp=$(execpath @gmp//:install_prefix)",
+        "--with-mpfr=$(execpath @mpfr//:install_prefix)",
+        "--with-mpc=$(execpath @mpc//:install_prefix)",
     ],
     targets = [
         "all-gcc",
@@ -28,6 +31,14 @@ configure_make(
         "@mpfr//:libmpfr",
         "@gmp//:libgmp",
         "@binutils//:binutils",
+    ],
+    data = [
+        # these are really build_data, but that causes each package to be compiled twice,
+        # once normally, and once "[for tool]" (exec configuration). Not sure if we can
+        # fix that.
+        "@gmp//:install_prefix",
+        "@mpfr//:install_prefix",
+        "@mpc//:install_prefix",
     ],
     visibility = ["//visibility:public"],
     env = {

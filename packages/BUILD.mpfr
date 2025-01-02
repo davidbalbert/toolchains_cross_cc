@@ -15,3 +15,10 @@ configure_make(
         "LD": "",
     },
 )
+
+filegroup(
+    name = "install_prefix",
+    srcs = [":libmpfr"],
+    output_group = "gen_dir",
+    visibility = ["//visibility:public"],
+)
