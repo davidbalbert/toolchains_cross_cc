@@ -11,15 +11,31 @@ configure_make(
     configure_options = [
         "--target=aarch64-unknown-linux-gnu",
         "--enable-languages=c,c++",
+
         "--with-gmp=$(execpath @gmp//:install_prefix)",
         "--with-mpfr=$(execpath @mpfr//:install_prefix)",
         "--with-mpc=$(execpath @mpc//:install_prefix)",
-    ],
-    targets = [
-        "all-gcc",
-        "install-gcc",
-        "all-target-libgcc",
-        "install-target-libgcc",
+
+        # adapted from https://www.linuxfromscratch.org/lfs/view/stable/chapter05/gcc-pass1.html
+        "--with-glibc-version=2.40",
+        "--with-newlib",
+        "--without-headers",
+        "--enable-default-pie",
+        "--enable-default-ssp",
+        "--disable-nls",
+        "--disable-shared",
+        "--disable-multilib",
+        "--disable-threads",
+        "--disable-libatomic",
+        "--disable-libgomp",
+        "--disable-libquadmath",
+        "--disable-libssp",
+        "--disable-libvtv",
+        "--disable-libstdcxx",
+
+        # TODO: --with-sysroot
+
+        # TODO: reproducible builds. Search for BR2_REPRODUCIBLE in buildroot. --with-debug-prefix-map=$(BASE_DIR)=buildroot
     ],
     out_binaries = [
         "gcc",

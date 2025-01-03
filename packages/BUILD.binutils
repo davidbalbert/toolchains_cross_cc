@@ -41,6 +41,9 @@ configure_make(
     lib_source = ":srcs",
     configure_options = [
         "--target=aarch64-unknown-linux-gnu",
+        # TODO: explain (comes from https://www.linuxfromscratch.org/lfs/view/stable/chapter05/binutils-pass1.html)
+        "--enable-new-dtags",
+        # TODO: maybe --with-sysroot
     ],
     out_binaries = BINS,
     out_static_libs = LIBS,
