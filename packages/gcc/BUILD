@@ -35,9 +35,8 @@ configure_make(
         # TODO: reproducible builds. Search for BR2_REPRODUCIBLE in buildroot. --with-debug-prefix-map=$(BASE_DIR)=buildroot
     ],
     out_binaries = [
-        "gcc",
-        "g++",
-        "cpp",
+        "aarch64-unknown-linux-gnu-gcc",
+        "aarch64-unknown-linux-gnu-g++",
     ],
     deps = [
         "//packages/binutils:bootstrap_binutils",
