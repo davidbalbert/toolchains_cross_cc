@@ -1,3 +1,5 @@
+# Not used in the project. Just a reference to work from.
+
 TARGET="aarch64-unknown-linux-gnu"
 STAGE1_PREFIX="/tmp/gccbuild/out-stage1"
 STAGE2_PREFIX="/tmp/gccbuild/out-stage2"

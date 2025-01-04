@@ -1,23 +1,15 @@
 load("@rules_foreign_cc//foreign_cc:defs.bzl", "configure_make")
 
-filegroup(
-    name = "srcs",
-    srcs = glob(["**"]),
-)
-
 configure_make(
-    name = "gcc",
-    lib_source = ":srcs",
+    name = "bootstrap_gcc",
+    lib_source = "@gcc//:srcs",
     configure_options = [
+        # adapted from https://www.linuxfromscratch.org/lfs/view/stable/chapter05/gcc-pass1.html
         "--target=aarch64-unknown-linux-gnu",
+        "--with-sysroot=aarch64-unknown-linux-gnu/sysroot",
+        "--with-glibc-version=2.36",
         "--enable-languages=c,c++",
 
-        "--with-gmp=$(execpath @gmp//:install_prefix)",
-        "--with-mpfr=$(execpath @mpfr//:install_prefix)",
-        "--with-mpc=$(execpath @mpc//:install_prefix)",
-
-        # adapted from https://www.linuxfromscratch.org/lfs/view/stable/chapter05/gcc-pass1.html
-        "--with-glibc-version=2.40",
         "--with-newlib",
         "--without-headers",
         "--enable-default-pie",
@@ -33,7 +25,12 @@ configure_make(
         "--disable-libvtv",
         "--disable-libstdcxx",
 
-        # TODO: --with-sysroot
+        # only needed because host == target (not a cross compiler), but we want to build it like a cross compiler.
+        "--disable-bootstrap",
+
+        "--with-gmp=$(execpath //packages/gmp:bootstrap_install_prefix)",
+        "--with-mpfr=$(execpath //packages/mpfr:bootstrap_install_prefix)",
+        "--with-mpc=$(execpath //packages/mpc:bootstrap_install_prefix)",
 
         # TODO: reproducible builds. Search for BR2_REPRODUCIBLE in buildroot. --with-debug-prefix-map=$(BASE_DIR)=buildroot
     ],
@@ -43,18 +40,18 @@ configure_make(
         "cpp",
     ],
     deps = [
-        "@mpc//:libmpc",
-        "@mpfr//:libmpfr",
-        "@gmp//:libgmp",
-        "@binutils//:binutils",
+        "//packages/binutils:bootstrap_binutils",
+        "//packages/gmp:bootstrap_libgmp",
+        "//packages/mpfr:bootstrap_libmpfr",
+        "//packages/mpc:bootstrap_libmpc",
     ],
     data = [
         # these are really build_data, but that causes each package to be compiled twice,
         # once normally, and once "[for tool]" (exec configuration). Not sure if we can
         # fix that.
-        "@gmp//:install_prefix",
-        "@mpfr//:install_prefix",
-        "@mpc//:install_prefix",
+        "//packages/gmp:bootstrap_install_prefix",
+        "//packages/mpfr:bootstrap_install_prefix",
+        "//packages/mpc:bootstrap_install_prefix",
     ],
     visibility = ["//visibility:public"],
     env = {
