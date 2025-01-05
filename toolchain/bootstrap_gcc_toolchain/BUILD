@@ -4,37 +4,37 @@ load("@rules_cc//cc/toolchains:tool.bzl", "cc_tool")
 
 cc_tool(
     name = "gcc",
-    src = "@host_root//:usr/bin/gcc",
+    src = "//packages/gcc/bootstrap_bin:aarch64-unknown-linux-gnu-gcc",
 )
 
 cc_tool(
     name = "g++",
-    src = "@host_root//:usr/bin/g++",
+    src = "//packages/gcc/bootstrap_bin:aarch64-unknown-linux-gnu-g++",
 )
 
 cc_tool(
     name = "as",
-    src = "@host_root//:usr/bin/as",
+    src = "//packages/binutils/bootstrap_bin:aarch64-unknown-linux-gnu-as",
 )
 
 cc_tool(
     name = "ld",
-    src = "@host_root//:usr/bin/ld",
+    src = "//packages/binutils/bootstrap_bin:aarch64-unknown-linux-gnu-ld",
 )
 
 cc_tool(
     name = "ar",
-    src = "@host_root//:usr/bin/ar",
+    src = "//packages/binutils/bootstrap_bin:aarch64-unknown-linux-gnu-ar",
 )
 
 cc_tool(
     name = "objcopy",
-    src = "@host_root//:usr/bin/objcopy",
+    src = "//packages/binutils/bootstrap_bin:aarch64-unknown-linux-gnu-objcopy",
 )
 
 cc_tool(
     name = "strip",
-    src = "@host_root//:usr/bin/strip",
+    src = "//packages/binutils/bootstrap_bin:aarch64-unknown-linux-gnu-strip",
 )
 
 cc_tool_map(
@@ -56,7 +56,7 @@ cc_toolchain(
 )
 
 toolchain(
-    name = "host_gcc_toolchain",
+    name = "bootstrap_gcc_toolchain",
     toolchain = ":toolchain",
     toolchain_type = "@bazel_tools//tools/cpp:toolchain_type",
 )
