@@ -43,7 +43,7 @@ configure_make(
         "--disable-nls",
         "--enable-new-dtags",
     ],
-    # out_binaries = BINS,
+    out_binaries = BINS,
     out_static_libs = LIBS,
     # out_shared_libs = SHARED_LIBS,
     # out_data_dirs = LIBTOOLS + ["share", "aarch64-unknown-linux-gnu"],
