@@ -5,13 +5,13 @@ local_repository(
     path = "../..",
 )
 
-load("@toolchains_cross_cc//toolchain:toolchain.bzl", "cross_cc_toolchain")
+# load("@toolchains_cross_cc//toolchain:toolchain.bzl", "cross_cc_toolchain")
 
-cross_cc_toolchain(
-    name = "aarch64_linux_gnu_gcc",
-    compiler = "gcc",
-    target = "aarch64-linux-gnu",
-    libc = "glibc",
-)
+# cross_cc_toolchain(
+#     name = "aarch64_linux_gnu_gcc",
+#     compiler = "gcc",
+#     target = "aarch64-linux-gnu",
+#     libc = "glibc",
+# )
 
-register_toolchains("//:aarch64_linux_gnu_gcc")
+# register_toolchains("//:aarch64_linux_gnu_gcc")
