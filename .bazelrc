@@ -11,3 +11,6 @@ build --experimental_reuse_sandbox_directories
 build --action_env="TZ=UTC"
 build --action_env="LANG=C"
 build --action_env="LC_ALL=C"
+
+# TODO: come up with a better solution. Something like https://github.com/dhbaird/rules_foreign_cc_jobserver
+build --action_env="MAKEFLAGS=-j10"
